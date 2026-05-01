@@ -45,7 +45,7 @@ public class Main {
                     result = Divisao(num1, num2);
                     break;
                 default:
-                    System.out.println("Operação não identificada!!");
+                    System.out.println("Operação não identificada!!!");
                     continue;
             }
             System.out.println("\nResultado: " + df.format(result));
