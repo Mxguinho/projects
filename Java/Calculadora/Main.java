@@ -54,6 +54,7 @@ public class Main {
                 i = 1;
             }
         }
+        System.out.println("Fim da linha.");
         s.close();
     }
     static float Soma(float n1, float n2) {
