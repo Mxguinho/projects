@@ -24,7 +24,7 @@ git merge
 git branch
 - mostra a branch atual
 
-git branch -b <nome-branch>
+git branch <nome-branch>
 - cria uma nova branch a partir do historico da branch atual
 
 git checkout <nome-branch>
