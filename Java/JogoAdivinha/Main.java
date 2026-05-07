@@ -1,7 +1,7 @@
 // Jogo de Adivinhação: O computador escolhe um número aleatório e o usuário tenta adivinhar. 
 // O loop só para quando o usuário acerta, dando dicas de "maior" ou "menor" a cada tentativa.
 
-package JogoAdivivnha;
+package JogoAdivinha;
 import java.util.Random;
 import java.util.Scanner;
 
