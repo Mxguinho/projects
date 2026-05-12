@@ -18,14 +18,6 @@ public class Main {
         }
         System.out.print("Fibonacci: ");
         System.out.print(fibonacci);
-        // for(int i = 0; i < selecao; i++) {
-        //     if(i == (selecao - 1)) {
-        //         System.out.print(fibonacci.get(i));
-        //     } else {
-        //         System.out.print(fibonacci.get(i) + ", ");
-        //     }
-        // }
-        // System.out.println(" ]");
         System.out.println();
         s.close();
     }
