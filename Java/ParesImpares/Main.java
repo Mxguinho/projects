@@ -24,5 +24,6 @@ public class Main {
         }
         numeros--;
         System.out.println("Total: " + numeros + "; Pares: " + pares + "; Impares: " + impares);
+        s.close();
     }
 }
