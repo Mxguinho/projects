@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yumehara Sana – Hero Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Black+Han+Sans&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-light: #f9c9d4;
+    --pink-mid: #f4a0b8;
+    --pink-dark: #e07090;
+    --pink-bg: #fce8ef;
+    --grid-color: rgba(240, 150, 180, 0.35);
+    --dark-text: #2c1a2e;
+    --tab-active: #3d2a45;
+    --tab-inactive: #fff0f5;
+    --mono: 'Share Tech Mono', monospace;
+    --body-font: 'Noto Sans JP', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f0d0dc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: var(--body-font);
+    padding: 24px;
+  }
+
+  .card {
+    width: 450px;
+    background: var(--pink-bg);
+    border: 2px solid var(--pink-dark);
+    position: relative;
+    box-shadow: 4px 4px 0 var(--pink-dark), 8px 8px 0 rgba(200,100,130,0.25);
+  }
+
+  /* grid texture */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 18px 18px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ----- TABS ----- */
+  .tabs {
+    display: flex;
+    border-bottom: 2px solid var(--pink-dark);
+    position: relative;
+    z-index: 1;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 10px 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    border-right: 2px solid var(--pink-dark);
+    background: var(--tab-inactive);
+    color: var(--dark-text);
+    transition: background 0.2s, color 0.2s;
+    position: relative;
+  }
+
+  .tab-btn:last-child { border-right: none; }
+
+  .tab-btn.active {
+    background: var(--tab-active);
+    color: #fff;
+  }
+
+  .tab-btn:not(.active):hover {
+    background: var(--pink-mid);
+  }
+
+  /* ----- PANEL ----- */
+  .panel {
+    display: none;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .panel.active { display: block; }
+
+  /* costume image placeholder (for hero costume tab) */
+  .costume-placeholder {
+    background: linear-gradient(135deg, var(--pink-mid), var(--pink-light));
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid var(--pink-dark);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--tab-active);
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  /* ----- SECTIONS ----- */
+  .section {
+    border-bottom: 2px solid var(--pink-mid);
+    padding: 14px 16px;
+    background: transparent;
+  }
+
+  .hero-name-section {
+    padding: 10px 16px 6px;
+    border-bottom: 2px solid var(--pink-mid);
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    color: var(--tab-active);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .hero-name-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--dark-text);
+    letter-spacing: 0.18em;
+  }
+
+  .char-name {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--tab-active);
+    letter-spacing: 0.14em;
+    line-height: 1.15;
+    padding: 16px 16px 12px;
+    border-bottom: 2px solid var(--pink-mid);
+  }
+
+  .cv-section { padding: 10px 16px; border-bottom: 2px solid var(--pink-mid); }
+  .cv-label {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--tab-active);
+    display: inline;
+    margin-right: 6px;
+  }
+  .cv-val {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--dark-text);
+    letter-spacing: 0.1em;
+  }
+
+  .stats-section {
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--pink-mid);
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .stat-row:last-child { margin-bottom: 0; }
+
+  .stat-key {
+    font-weight: bold;
+    color: var(--tab-active);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    min-width: 90px;
+    font-size: 13px;
+  }
+  .stat-val {
+    color: var(--dark-text);
+    letter-spacing: 0.1em;
+  }
+
+  .desc-section {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  .desc-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--dark-text);
+    line-height: 1.75;
+    letter-spacing: 0.04em;
+    text-align: justify;
+    margin-bottom: 10px;
+  }
+  .desc-text:last-child { margin-bottom: 0; }
+
+  /* ----- CASUAL / SCHOOL panels (placeholder) ----- */
+  .alt-panel-content {
+    padding: 40px 20px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--tab-active);
+    letter-spacing: 0.1em;
+    opacity: 0.65;
+    border-top: none;
+  }
+  .alt-panel-content .big-label {
+    font-size: 28px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.4;
+  }
+
+  /* scanline overlay for retro feel */
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 3px,
+      rgba(255,200,220,0.06) 3px,
+      rgba(255,200,220,0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* tab click ripple */
+  @keyframes tabPop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(0.96); }
+    100% { transform: scale(1); }
+  }
+  .tab-btn:active { animation: tabPop 0.15s ease; }
+
+  /* Personagem */
+
+  .card-wrapper {
+   position: relative; /* container pai */
+  }
+
+  .personagem {
+    position: absolute;
+    bottom: 0;         /* ancora na base do card */
+    top: 0%;
+    right: 2%;      /* desloca pra fora lateralmente */
+    z-index: 10;       /* fica na frente */
+    height: 62%;      /* maior que o card pra vazar pro topo */
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn" data-tab="school">School Uniform</button>
+    <button class="tab-btn active" data-tab="hero">Hero Costume</button>
+    <button class="tab-btn" data-tab="casual">Casual</button>
+  </div>
+
+  <!-- HERO COSTUME PANEL (default) -->
+  
+  <div class="panel active" id="tab-hero">
+    <div class="card-wrapper">
+    <img class="personagem" src="teste.png" />
+    <div class="section hero-name-section">
+      <span class="label">Hero Name:</span>
+      <span class="hero-name-val">santuário</span>
+    </div>
+
+    <div class="char-name">
+      Y u m e h a r a<br>S a n a
+    </div>
+
+    <div class="cv-section">
+      <span class="cv-label">CV:</span>
+      <span class="cv-val">Haruka Tomatsu</span>
+    </div>
+
+    <div class="stats-section">
+      <div class="stat-row">
+        <span class="stat-key">Birthday:</span>
+        <span class="stat-val">07/07</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Height:</span>
+        <span class="stat-val">153 cm</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Quirk:</span>
+        <span class="stat-val">vínculo do<br>coração</span>
+      </div>
+    </div>
+
+    <div class="desc-section">
+      <p class="desc-text">
+        seu poder consiste em espalhar um cheiro calmante quando há muito pânico sempre que quiser e ao tocar as pessoas ela os coloca em um sono profundo de até 2 horas
+      </p>
+      <p class="desc-text">
+        sua fraqueza é que, ao usar muito seu poder do sono profundo, ela desmaia de cansaço e o seu cheiro calmante a afeta também, a fazendo usar uma máscara. Ela só pode usar o sono profundo por pouco tempo em pessoas q não tem um vínculo profundo.
+      </p>
+    </div>
+    </div>
+  </div>
+
+  <!-- SCHOOL UNIFORM PANEL -->
+  <div class="panel" id="tab-school">
+    <div class="costume-placeholder">
+      [ SCHOOL UNIFORM ]
+    </div>
+    <div class="section hero-name-section">
+      <div class="label">Hero Name:</div>
+      <div class="hero-name-val">s a n t u á r i o</div>
+    </div>
+    <div class="char-name">
+      Y u m e h a r a<br>S a n a
+    </div>
+    <div class="stats-section">
+      <div class="stat-row">
+        <span class="stat-key">Birthday:</span>
+        <span class="stat-val">07/07</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Height:</span>
+        <span class="stat-val">153 cm</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Quirk:</span>
+        <span class="stat-val">vínculo do coração</span>
+      </div>
+    </div>
+    <div class="desc-section">
+      <p class="desc-text">uniforme escolar da U.A. — saia xadrez rosa e blazer navy com emblema dourado.</p>
+    </div>
+  </div>
+
+  <!-- CASUAL PANEL -->
+  <div class="panel" id="tab-casual">
+    <div class="costume-placeholder">
+      [ CASUAL WEAR ]
+    </div>
+    <div class="section hero-name-section">
+      <div class="label">Hero Name:</div>
+      <div class="hero-name-val">s a n t u á r i o</div>
+    </div>
+    <div class="char-name">
+      Y u m e h a r a<br>S a n a
+    </div>
+    <div class="stats-section">
+      <div class="stat-row">
+        <span class="stat-key">Birthday:</span>
+        <span class="stat-val">07/07</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Height:</span>
+        <span class="stat-val">153 cm</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">Quirk:</span>
+        <span class="stat-val">vínculo do coração</span>
+      </div>
+    </div>
+    <div class="desc-section">
+      <p class="desc-text">roupas casuais — look leve e confortável com tons pastel que combinam com sua personalidade serena.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      document.getElementById('tab-' + target).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
