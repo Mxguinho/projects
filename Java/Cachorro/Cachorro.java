@@ -5,10 +5,15 @@ import java.util.Scanner;
 public class Cachorro {
     Scanner s = new Scanner(System.in);
     private float tamanho;
+    private String nome;
 
     public Cachorro() {
         float tamanho;
-        System.out.println("Qual Tamanho do seu cachorro em centimetros de altura? ");
+        String nome;
+        System.out.println("Qual o nome do seu cachorro? ");
+        nome = s.next();
+        setNome(nome);
+        System.out.println("Qual Tamanho do " + nome + " em centimetros de altura? ");
         tamanho = s.nextInt();
         setTamanho(tamanho);
     }
@@ -28,5 +33,13 @@ public class Cachorro {
 
     public void setTamanho(float tamanho) {
         this.tamanho = tamanho;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }
